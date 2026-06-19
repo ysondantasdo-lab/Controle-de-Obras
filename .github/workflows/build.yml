@@ -19,10 +19,8 @@ jobs:
 
       - name: Criar Arquivos de Estrutura do Android
         run: |
-          # Cria a pasta app caso ela não exista no sistema de arquivos do GitHub
           mkdir -p app
 
-          # Cria as configurações básicas necessárias na raiz do seu projeto
           echo "include ':app'" > settings.gradle
 
           cat << 'EOF' > build.gradle
@@ -79,8 +77,9 @@ jobs:
           }
           EOF
 
+      # Mudança essencial: O comando "--no-configuration-cache" desativa o recurso que quebrou no Gradle 9.5
       - name: Compilar o App Bundle
-        run: gradle :app:bundleRelease
+        run: gradle :app:bundleRelease --no-configuration-cache
 
       - name: Disponibilizar Download do Arquivo (.aab)
         uses: actions/upload-artifact@v4
