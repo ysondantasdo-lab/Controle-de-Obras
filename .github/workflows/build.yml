@@ -14,27 +14,40 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
 
-      # Esta ação oficial configura o Gradle automaticamente, eliminando a necessidade do arquivo 'gradlew'
       - name: Configurar Gradle do Sistema
         uses: gradle/actions/setup-gradle@v3
 
       - name: Criar Arquivos de Estrutura do Android
         run: |
+          # Cria a pasta app caso ela não exista no sistema de arquivos do GitHub
+          mkdir -p app
+
           # Cria as configurações básicas necessárias na raiz do seu projeto
           echo "include ':app'" > settings.gradle
 
           cat << 'EOF' > build.gradle
-          plugins {
-              id 'com.android.application' version '8.2.2' apply false
-              id 'org.jetbrains.kotlin.android' version '1.9.22' apply false
+          buildscript {
+              repositories {
+                  google()
+                  mavenCentral()
+              }
+              dependencies {
+                  classpath 'com.android.tools.build:gradle:8.2.2'
+                  classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.22'
+              }
+          }
+          allprojects {
+              repositories {
+                  google()
+                  mavenCentral()
+              }
           }
           EOF
 
           cat << 'EOF' > app/build.gradle
-          plugins {
-              id 'com.android.application'
-              id 'org.jetbrains.kotlin.android'
-          }
+          apply plugin: 'com.android.application'
+          apply plugin: 'org.jetbrains.kotlin.android'
+
           android {
               namespace 'com.example.controledeobras'
               compileSdk 34
@@ -66,7 +79,6 @@ jobs:
           }
           EOF
 
-      # Compila diretamente usando o comando global do sistema
       - name: Compilar o App Bundle
         run: gradle :app:bundleRelease
 
