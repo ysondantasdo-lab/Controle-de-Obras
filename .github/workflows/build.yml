@@ -7,44 +7,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
-      - name: Configurar Java
+
+      - name: Configurar Java 17
         uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
           java-version: '17'
 
-      - name: Criar Projeto Android Estruturado
-        run: |
-          # 1. Cria um projeto Android padrão usando a ferramenta oficial (Command Line Tools)
-          wget https://google.com
-          unzip commandlinetools-linux-11076708_latest.zip
-          mkdir -p android-sdk/cmdline-tools
-          mv cmdline-tools android-sdk/cmdline-tools/latest
-          export ANDROID_HOME=$PWD/android-sdk
-          export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
-          
-          # Aceita licenças e instala ferramentas essenciais
-          yes | sdkmanager --licenses
-          sdkmanager "platforms;android-34" "build-tools;34.0.0"
-          
-          # 2. Inicializa a estrutura do Gradle do zero
-          gradle wrapper --gradle-version 8.4
+      # Esta ação oficial configura o Gradle automaticamente, eliminando a necessidade do arquivo 'gradlew'
+      - name: Configurar Gradle do Sistema
+        uses: gradle/actions/setup-gradle@v3
 
-      - name: Injetar Codigo Puro do AI Studio no Projeto
+      - name: Criar Arquivos de Estrutura do Android
         run: |
-          # Garante que as pastas do aplicativo existam e move seus arquivos para o local correto de compilação
-          mkdir -p app/src/main/java
-          mkdir -p app/src/main/res
-          
-          # Move o Manifesto e os códigos gerados pelo Gemini
-          [ -f AndroidManifest.xml ] && mv AndroidManifest.xml app/src/main/
-          [ -d src ] && cp -r src/* app/src/main/java/ || true
-          [ -d res ] && cp -r res/* app/src/main/res/ || true
-          
-          # Cria os arquivos de configuração mínimos que o Android exige para compilar
+          # Cria as configurações básicas necessárias na raiz do seu projeto
           echo "include ':app'" > settings.gradle
-          
+
           cat << 'EOF' > build.gradle
           plugins {
               id 'com.android.application' version '8.2.2' apply false
@@ -88,13 +66,12 @@ jobs:
           }
           EOF
 
-      - name: Executar Compilação do App Bundle
-        run: |
-          chmod +x gradlew
-          ./gradlew :app:bundleRelease
+      # Compila diretamente usando o comando global do sistema
+      - name: Compilar o App Bundle
+        run: gradle :app:bundleRelease
 
-      - name: Baixar Arquivo Final
+      - name: Disponibilizar Download do Arquivo (.aab)
         uses: actions/upload-artifact@v4
         with:
           name: aplicativo-aab
-          path: app/build/outputs/bundle/release/*.aab
+          path: "**/build/outputs/bundle/release/*.aab"
