@@ -1,0 +1,6 @@
+{
+  "name": "Controle de Obras",
+  "description": "Aplicativo para controle de obras, fornecedores, prestadores de serviço e pagamentos.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
