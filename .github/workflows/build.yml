@@ -21,6 +21,9 @@ jobs:
         run: |
           mkdir -p app
 
+          # SOLUÇÃO DO ERRO: Cria o arquivo gradle.properties ativando o AndroidX exigido pelo Jetpack Compose
+          echo "android.useAndroidX=true" > gradle.properties
+
           echo "include ':app'" > settings.gradle
 
           cat << 'EOF' > build.gradle
@@ -77,7 +80,6 @@ jobs:
           }
           EOF
 
-      # Mudança essencial: O comando "--no-configuration-cache" desativa o recurso que quebrou no Gradle 9.5
       - name: Compilar o App Bundle
         run: gradle :app:bundleRelease --no-configuration-cache
 
