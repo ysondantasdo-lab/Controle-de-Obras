@@ -19,6 +19,6 @@ workflows:
       - name: Build Android App Bundle (AAB)
         script: |
           gradle wrapper
-      ./gradlew bundleRelease
+          ./gradlew bundleRelease
     artifacts:
       - app/build/outputs/bundle/release/*.aab
