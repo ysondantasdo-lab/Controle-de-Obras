@@ -18,7 +18,6 @@ workflows:
     scripts:
       - name: Build Android App Bundle
         script: |
-          gradle wrapper --gradle-version 9.2.1
           ./gradlew bundleRelease
     artifacts:
       - app/build/outputs/bundle/release/*.aab
