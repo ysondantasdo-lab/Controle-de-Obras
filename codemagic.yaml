@@ -15,8 +15,8 @@ workflows:
       branch_patterns:
         - pattern: 'main'
           include: true
-        scripts:
-        - name: Build Android App Bundle
+    scripts:
+      - name: Build Android App Bundle
         script: |
           gradle wrapper --gradle-version 9.2.1
           ./gradlew bundleRelease
