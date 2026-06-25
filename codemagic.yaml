@@ -16,8 +16,13 @@ workflows:
         - pattern: 'main'
           include: true
     scripts:
+      - name: Instalar Versao Correta do Gradle
+        script: |
+          # Altera a versão do Gradle no sistema operacional do servidor antes de começar
+          vcm-cli gradle install --version $GRADLE_VERSION
       - name: Build Android App Bundle
         script: |
+          # Compila o projeto com a versão global que acabamos de atualizar
           gradle bundleRelease
     artifacts:
       - app/build/outputs/bundle/release/*.aab
