@@ -15,10 +15,10 @@ workflows:
       branch_patterns:
         - pattern: 'main'
           include: true
-    scripts:
-      - name: Build Android App Bundle (AAB)
+        scripts:
+      - name: Build Android App Bundle
         script: |
-          gradle wrapper
+          gradle wrapper --gradle-version 9.2.1
           ./gradlew bundleRelease
     artifacts:
       - app/build/outputs/bundle/release/*.aab
