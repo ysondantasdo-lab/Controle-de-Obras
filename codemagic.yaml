@@ -16,13 +16,18 @@ workflows:
         - pattern: 'main'
           include: true
     scripts:
-      - name: Instalar Versao Correta do Gradle
+      - name: Configurar e Rodar o Gradle Wrapper
         script: |
-          # Altera a versão do Gradle no sistema operacional do servidor antes de começar
-          vcm-cli gradle install --version $GRADLE_VERSION
-      - name: Build Android App Bundle
-        script: |
-          # Compila o projeto com a versão global que acabamos de atualizar
-          gradle bundleRelease
+          # Cria a pasta interna que o Gradle exige caso ela nao exista
+          mkdir -p gradle/wrapper
+          
+          # Baixa o arquivo jar diretamente para o lugar correto na nuvem
+          curl -L -o gradle/wrapper/gradle-wrapper.jar https://githubusercontent.com
+          
+          # Da permissao de execucao para o script gradlew que voce acabou de criar
+          chmod +x gradlew
+          
+          # Compila o aplicativo usando a estrutura perfeita e na versao 9.3.1
+          ./gradlew bundleRelease
     artifacts:
       - app/build/outputs/bundle/release/*.aab
