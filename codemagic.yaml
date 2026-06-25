@@ -23,3 +23,4 @@ workflows:
           ./gradlew bundleRelease
     artifacts:
       - app/build/outputs/bundle/release/*.aab
+      - app/build/outputs/mapping/release/mapping.txt
