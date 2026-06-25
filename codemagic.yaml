@@ -18,7 +18,7 @@ workflows:
     scripts:
       - name: Build Android App Bundle
         script: |
-          gradle wrapper --gradle-version 9.2.1
+          gradle wrapper --gradle-version 9.3.1
           chmod +x gradlew
           ./gradlew bundleRelease
     artifacts:
