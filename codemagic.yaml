@@ -16,18 +16,15 @@ workflows:
         - pattern: 'main'
           include: true
     scripts:
-      - name: Configurar e Rodar o Gradle Wrapper
+      - name: Build Android App Bundle
         script: |
-          # Cria a pasta interna que o Gradle exige caso ela nao exista
-          mkdir -p gradle/wrapper
+          # Gera toda a estrutura interna do wrapper na versao correta de forma nativa e isolada
+          gradle wrapper --gradle-version 9.3.1
           
-          # Baixa o arquivo jar diretamente para o lugar correto na nuvem
-          curl -L -o gradle/wrapper/gradle-wrapper.jar https://githubusercontent.com
-          
-          # Da permissao de execucao para o script gradlew que voce acabou de criar
+          # Da permissao de execucao ao arquivo criado
           chmod +x gradlew
           
-          # Compila o aplicativo usando a estrutura perfeita e na versao 9.3.1
+          # Compila o aplicativo diretamente
           ./gradlew bundleRelease
     artifacts:
       - app/build/outputs/bundle/release/*.aab
