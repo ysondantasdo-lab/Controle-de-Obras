@@ -7,7 +7,7 @@ workflows:
       groups:
         - android-signing
       vars:
-        PACKAGE_NAME: "com.example.controledeobras"
+        PACKAGE_NAME: "br.com.yson.controle.de.obras"
       node: latest
     triggering:
       events:
