@@ -10,6 +10,12 @@ android {
   namespace = "br.com.yson.controle.de.obras"
   compileSdk = 36
 
+  sourceSets {
+    getByName("main") {
+      java.setSrcDirs(listOf("src/main/java/com/example"))
+    }
+  }
+
   defaultConfig {
     applicationId = "br.com.yson.controle.de.obras"
     minSdk = 24
