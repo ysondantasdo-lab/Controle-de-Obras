@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-  namespace = "com.example"
+  namespace = "br.com.yson.controle.de.obras"
   compileSdk = 36
 
   defaultConfig {
-    applicationId = "com.aistudio.gestaoobras.pqbxyz"
+    applicationId = "br.com.yson.controle.de.obras"
     minSdk = 24
     targetSdk = 35
     versionCode = 1
