@@ -20,12 +20,19 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
-# Mantém todas as suas classes de dados (Entidades) intactas
+# PROTEÇÃO CONTRA A EXCLUSÃO DA TELA INICIAL
+-keep class com.example.MainActivity { *; }
+-keep class br.com.yson.controle.de.obras.MainActivity { *; }
+-keep public class * extends android.app.Activity
+
+# PROTEÇÃO DAS ENTIDADES DO BANCO DE DADOS (ENTITIES.KT)
 -keep class com.example.data.model.** { *; }
+-keep class br.com.yson.controle.de.obras.data.model.** { *; }
 
-# Mantém todas as suas interfaces de acesso (DAOs) intactas
+# PROTEÇÃO DAS INTERFACES DE CONSULTA (APPDAO.KT)
 -keep class com.example.data.dao.** { *; }
+-keep class br.com.yson.controle.de.obras.data.dao.** { *; }
 
-# Regras essenciais para o Room Database funcionar em builds de produção
+# REGRAS OBRIGATÓRIAS PARA O ROOM DATABASE
 -keep class * extends androidx.room.RoomDatabase
 -dontwarn androidx.room.**
