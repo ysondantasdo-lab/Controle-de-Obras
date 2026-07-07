@@ -19,3 +19,13 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# Mantém todas as suas classes de dados (Entidades) intactas
+-keep class com.example.data.model.** { *; }
+
+# Mantém todas as suas interfaces de acesso (DAOs) intactas
+-keep class com.example.data.dao.** { *; }
+
+# Regras essenciais para o Room Database funcionar em builds de produção
+-keep class * extends androidx.room.RoomDatabase
+-dontwarn androidx.room.**
