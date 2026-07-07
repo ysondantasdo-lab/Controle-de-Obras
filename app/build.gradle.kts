@@ -20,8 +20,8 @@ android {
     applicationId = "br.com.yson.controle.de.obras"
     minSdk = 24
     targetSdk = 35
-    versionCode = 8
-    versionName = "1.7"
+    versionCode = 10
+    versionName = "1.9"
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
