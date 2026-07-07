@@ -1,4 +1,4 @@
-package com.example
+package br.com.controle.de.obras
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
