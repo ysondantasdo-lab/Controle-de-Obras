@@ -80,7 +80,12 @@ interface AppDao {
 
 
     // --- PAGAMENTOS FORNECEDOR ---
-    @Query("SELECT COALESCE(SUM(valorPago), 0.0) FROM fornecedores_obra WHERE fornecedorId = :fornecedorId")
+    @Query("""
+        SELECT COALESCE(SUM(p.valor), 0.0) 
+        FROM pagamentos_fornecedor p
+        INNER JOIN fornecedores_obra fo ON p.fornecedorObraId = fo.id
+        WHERE fo.fornecedorId = :fornecedorId
+    """)
     suspend fun getTotalPaidForFornecedor(fornecedorId: Int): Double
 
     @Query("SELECT * FROM pagamentos_fornecedor WHERE fornecedorObraId = :fornecedorObraId ORDER BY id DESC")
@@ -126,6 +131,7 @@ interface AppDao {
 
     @Delete
     suspend fun deletePagamentoPrestador(pagamento: PagamentoPrestador)
+
     // --- LOTES DA OBRA ---
     @Query("SELECT * FROM lotes_obra WHERE obraId = :obraId")
     fun getLotesForObra(obraId: Int): Flow<List<LoteObra>>
