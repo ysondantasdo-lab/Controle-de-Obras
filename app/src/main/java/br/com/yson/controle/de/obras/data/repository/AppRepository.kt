@@ -1,4 +1,4 @@
-package com.example.data.repository
+package br.com.yson.controle.de.obras.data.repository
 
 import com.example.data.dao.AppDao
 import com.example.data.model.*
