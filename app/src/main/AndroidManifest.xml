@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://android.com"
-    xmlns:tools="http://android.com"
-    package="br.com.yson.controle.de.obras">
+    xmlns:tools="http://android.com">
 
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
@@ -14,7 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
-        tools:node="replace">
+        tools:node="merge">
         
         <activity
             android:name="br.com.yson.controle.de.obras.MainActivity"
