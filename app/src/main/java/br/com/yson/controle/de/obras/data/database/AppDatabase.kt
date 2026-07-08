@@ -6,8 +6,8 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.example.data.dao.AppDao
-import com.example.data.model.*
+import br.com.yson.controle.de.obras.data.dao.AppDao
+import br.com.yson.controle.de.obras.data.model.*
 
 @Database(
     entities = [
