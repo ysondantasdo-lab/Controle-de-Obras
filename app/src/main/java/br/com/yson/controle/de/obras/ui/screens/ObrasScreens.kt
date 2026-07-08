@@ -49,8 +49,8 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import com.example.data.model.*
-import com.example.ui.viewmodel.ObrasViewModel
+import br.com.yson.controle.de.obras.data.model.*
+import br.com.yson.controle.de.obras.ui.viewmodel.ObrasViewModel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import java.io.BufferedReader
