@@ -13,9 +13,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.ui.screens.*
-import com.example.ui.theme.MyApplicationTheme
-import com.example.ui.viewmodel.ObrasViewModel
+import br.com.yson.controle.de.obras.ui.screens.*
+import br.com.yson.controle.de.obras.ui.theme.MyApplicationTheme
+import br.com.yson.controle.de.obras.ui.viewmodel.ObrasViewModel
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
