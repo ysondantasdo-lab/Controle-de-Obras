@@ -8,7 +8,7 @@ plugins {
 
 android {
   namespace = "br.com.yson.controle.de.obras"
-  compileSdk = 35
+  compileSdk = 36 // Mantido em 36 conforme exigido pelas bibliotecas
 
   
   defaultConfig {
@@ -17,6 +17,8 @@ android {
     targetSdk = 35
     versionCode = 12
     versionName = "2.1"
+    manifestPlaceholders["androidManifestMerger"] = "merge"
+
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
