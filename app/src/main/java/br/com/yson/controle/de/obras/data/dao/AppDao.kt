@@ -1,4 +1,4 @@
-package com.example.data.dao
+package br.com.yson.controle.de.obras.data.dao
 
 import androidx.room.*
 import com.example.data.model.*
