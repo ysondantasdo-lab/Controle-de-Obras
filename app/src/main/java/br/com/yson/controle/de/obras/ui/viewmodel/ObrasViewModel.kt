@@ -3,9 +3,9 @@ package br.com.yson.controle.de.obras.ui.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.data.database.AppDatabase
-import com.example.data.model.*
-import com.example.data.repository.AppRepository
+import br.com.yson.controle.de.obras.data.database.AppDatabase
+import br.com.yson.controle.de.obras.data.model.*
+import br.com.yson.controle.de.obras.data.repository.AppRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
@@ -108,7 +108,6 @@ class ObrasViewModel(application: Application) : AndroidViewModel(application) {
                 )
             ).toInt()
 
-            // If an initial payment amount was declared, record it in history too
             if (valorPago > 0.0) {
                 repository.insertPagamentoFornecedor(
                     PagamentoFornecedor(
@@ -158,7 +157,7 @@ class ObrasViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    suspend fun getHistoricalTotalPaidForFornecedor(fornecedorId: Int): Double {
+    suspend fun getHistoricalTotalPaidFor Fornecedor(fornecedorId: Int): Double {
         return repository.getHistoricalTotalPaidForFornecedor(fornecedorId)
     }
 
@@ -168,7 +167,6 @@ class ObrasViewModel(application: Application) : AndroidViewModel(application) {
         data: String
     ) {
         viewModelScope.launch(Dispatchers.IO) {
-            // 1. Insert history entry
             repository.insertPagamentoFornecedor(
                 PagamentoFornecedor(
                     fornecedorObraId = fornecedorObra.id,
@@ -177,11 +175,9 @@ class ObrasViewModel(application: Application) : AndroidViewModel(application) {
                 )
             )
 
-            // 2. Query all payments to calculate exact sum
             val updatedPayments = repository.getPagamentosForFornecedorObra(fornecedorObra.id).first()
             val totalSum = updatedPayments.sumOf { it.valor }
 
-            // 3. Update the parent link row with updated cumulative sum and latest payment date
             repository.insertFornecedorObra(
                 FornecedorObra(
                     id = fornecedorObra.id,
@@ -194,8 +190,6 @@ class ObrasViewModel(application: Application) : AndroidViewModel(application) {
             )
         }
     }
-
-
     // --- COORDENATED PRESTADORES DA OBRA ---
     fun getPrestadoresForObra(obraId: Int): Flow<List<PrestadorObraWithDetails>> {
         return repository.getPrestadoresForObra(obraId)
@@ -226,7 +220,6 @@ class ObrasViewModel(application: Application) : AndroidViewModel(application) {
                 )
             ).toInt()
 
-            // If an initial payment amount was declared, record it in history too
             if (valorPago > 0.0) {
                 repository.insertPagamentoPrestador(
                     PagamentoPrestador(
@@ -236,7 +229,6 @@ class ObrasViewModel(application: Application) : AndroidViewModel(application) {
                     )
                 )
 
-                // Recalculate total sum to keep DB strictly in-sync and accurate
                 val updatedPayments = repository.getPagamentosForPrestadorObra(recordId).first()
                 val totalSum = updatedPayments.sumOf { it.valor }
 
@@ -281,7 +273,7 @@ class ObrasViewModel(application: Application) : AndroidViewModel(application) {
             repository.insertPrestadorObra(
                 PrestadorObra(
                     id = prestadorObra.id,
-                    obraId = prestadorObra.obraId,
+                    obraId = obraId,
                     prestadorId = prestadorObra.prestadorId,
                     valorMaterial = prestadorObra.valorMaterial,
                     valorPago = totalSum,
@@ -297,7 +289,6 @@ class ObrasViewModel(application: Application) : AndroidViewModel(application) {
         data: String
     ) {
         viewModelScope.launch(Dispatchers.IO) {
-            // 1. Insert history entry
             repository.insertPagamentoPrestador(
                 PagamentoPrestador(
                     prestadorObraId = prestadorObra.id,
@@ -306,15 +297,13 @@ class ObrasViewModel(application: Application) : AndroidViewModel(application) {
                 )
             )
 
-            // 2. Query all payments to calculate exact sum
             val updatedPayments = repository.getPagamentosForPrestadorObra(prestadorObra.id).first()
             val totalSum = updatedPayments.sumOf { it.valor }
 
-            // 3. Update the parent link row with updated cumulative sum and latest payment date
             repository.insertPrestadorObra(
                 PrestadorObra(
                     id = prestadorObra.id,
-                    obraId = prestadorObra.obraId,
+                    obraId = obraId,
                     prestadorId = prestadorObra.prestadorId,
                     valorMaterial = prestadorObra.valorMaterial,
                     valorPago = totalSum,
@@ -347,7 +336,6 @@ class ObrasViewModel(application: Application) : AndroidViewModel(application) {
             )
         }
     }
-
 
     // --- LOTES DA OBRA ---
     fun getLotesForObra(obraId: Int): Flow<List<LoteObra>> {
@@ -398,7 +386,6 @@ class ObrasViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     // --- CSV IMPORT & EXPORT EXPOSURE ---
-    
     suspend fun getCsvContentForExport(): String {
         return withContext(Dispatchers.IO) {
             val f = allFornecedores.value
