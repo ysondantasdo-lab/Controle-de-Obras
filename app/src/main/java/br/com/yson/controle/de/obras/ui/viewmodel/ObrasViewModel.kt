@@ -1,4 +1,4 @@
-package com.example.ui.viewmodel
+package br.com.yson.controle.de.obras.ui.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
