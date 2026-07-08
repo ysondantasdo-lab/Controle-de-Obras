@@ -18,7 +18,9 @@ android {
     versionCode = 12
     versionName = "2.1"
     manifestPlaceholders["androidManifestMerger"] = "merge"
-
+    
+    // Força o compilador do banco de dados a usar a pasta limpa de esquemas
+    ksp { arg("room.schemaLocation", "$projectDir/schemas") }
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
