@@ -1,7 +1,7 @@
 package br.com.yson.controle.de.obras.data.dao
 
 import androidx.room.*
-import com.example.data.model.*
+import br.com.yson.controle.de.obras.data.model.*
 import kotlinx.coroutines.flow.Flow
 
 @Dao
