@@ -1,7 +1,7 @@
 package br.com.yson.controle.de.obras.data.repository
 
-import com.example.data.dao.AppDao
-import com.example.data.model.*
+import br.com.yson.controle.de.obras.data.dao.AppDao
+import br.com.yson.controle.de.obras.data.model.*
 import kotlinx.coroutines.flow.Flow
 import java.lang.StringBuilder
 
