@@ -22,14 +22,11 @@ workflows:
           echo $CM_KEYSTORE | base64 --decode > $CM_BUILD_DIR/controledeobra.p12
       - name: Build Android App Bundle
         script: |
-          # Gera toda a estrutura interna do wrapper na versao correta de forma nativa e isolada
-          gradle wrapper --gradle-version 9.3.1
-          
-          # Da permissao de execucao ao arquivo criado
+          # Da permissao de execucao ao arquivo wrapper existente no projeto
           chmod +x gradlew
           
-          # Compila o app injetando as credenciais de assinatura que salvamos
-          ./gradlew bundleRelease \
+          # Compila o app de forma limpa usando a versao de Gradle nativa do seu projeto
+          ./gradlew clean bundleRelease \
             -Pandroid.injected.signing.store.file=$CM_BUILD_DIR/controledeobra.p12 \
             -Pandroid.injected.signing.store.password=$CM_KEYSTORE_PASSWORD \
             -Pandroid.injected.signing.key.alias=$CM_KEY_ALIAS \
