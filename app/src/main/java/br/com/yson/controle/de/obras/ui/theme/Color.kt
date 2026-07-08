@@ -1,4 +1,4 @@
-package com.example.ui.theme
+package br.com.yson.controle.de.obras.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
