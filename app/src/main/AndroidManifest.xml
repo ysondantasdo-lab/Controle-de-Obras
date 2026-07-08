@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://android.com"
-    xmlns:tools="http://android.com">
+    xmlns:tools="http://android.com"
+    package="br.com.yson.controle.de.obras">
 
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
@@ -14,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         tools:node="replace">
-
+        
         <activity
             android:name="com.example.MainActivity"
             android:exported="true"
@@ -25,7 +26,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        
     </application>
 
 </manifest>
