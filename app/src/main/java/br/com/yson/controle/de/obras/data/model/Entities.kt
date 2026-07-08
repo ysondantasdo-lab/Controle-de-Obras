@@ -1,4 +1,4 @@
-package com.example.data.model
+package br.com.yson.controle.de.obras.data.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
