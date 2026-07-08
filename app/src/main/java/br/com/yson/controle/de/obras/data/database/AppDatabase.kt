@@ -1,4 +1,4 @@
-package com.example.data.database
+package br.com.yson.controle.de.obras.data.database
 
 import android.content.Context
 import androidx.room.Database
