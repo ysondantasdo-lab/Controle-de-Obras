@@ -8,7 +8,7 @@ plugins {
 
 android {
   namespace = "br.com.yson.controle.de.obras"
-  compileSdk = 36
+  compileSdk = 35
 
   
   defaultConfig {
