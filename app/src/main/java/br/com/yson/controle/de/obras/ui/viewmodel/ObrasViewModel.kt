@@ -273,7 +273,7 @@ class ObrasViewModel(application: Application) : AndroidViewModel(application) {
             repository.insertPrestadorObra(
                 PrestadorObra(
                     id = prestadorObra.id,
-                    obraId = obraId,
+                    obraId = prestadorObra.obraId,
                     prestadorId = prestadorObra.prestadorId,
                     valorMaterial = prestadorObra.valorMaterial,
                     valorPago = totalSum,
@@ -303,7 +303,7 @@ class ObrasViewModel(application: Application) : AndroidViewModel(application) {
             repository.insertPrestadorObra(
                 PrestadorObra(
                     id = prestadorObra.id,
-                    obraId = obraId,
+                    obraId = prestadorObra.obraId,
                     prestadorId = prestadorObra.prestadorId,
                     valorMaterial = prestadorObra.valorMaterial,
                     valorPago = totalSum,
