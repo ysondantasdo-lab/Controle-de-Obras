@@ -15,8 +15,8 @@ android {
     applicationId = "br.com.yson.controle.de.obras"
     minSdk = 24
     targetSdk = 35
-    versionCode = 12
-    versionName = "2.1"
+    versionCode = 13
+    versionName = "2.2"
     manifestPlaceholders["androidManifestMerger"] = "merge"
     
     // Força o compilador do banco de dados a usar a pasta limpa de esquemas
