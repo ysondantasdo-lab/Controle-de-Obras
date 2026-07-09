@@ -1,12 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://android.com"
-    xmlns:tools="http://android.com">
-
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
     <!-- Permissão de contatos declarada e blindada contra erros de fusão -->
     <uses-permission 
         android:name="android.permission.READ_CONTACTS" 
         tools:remove="android:maxSdkVersion" />
-
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -30,5 +27,4 @@
         </activity>
         
     </application>
-
 </manifest>
