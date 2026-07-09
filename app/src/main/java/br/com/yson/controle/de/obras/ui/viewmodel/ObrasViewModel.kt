@@ -157,7 +157,7 @@ class ObrasViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    suspend fun getHistoricalTotalPaidFor Fornecedor(fornecedorId: Int): Double {
+    suspend fun getHistoricalTotalPaidForFornecedor(fornecedorId: Int): Double {
         return repository.getHistoricalTotalPaidForFornecedor(fornecedorId)
     }
 
