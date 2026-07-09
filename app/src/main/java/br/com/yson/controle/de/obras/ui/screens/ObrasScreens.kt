@@ -1742,7 +1742,7 @@ fun BurocraciaObraScreen(
     var showAddDialog by remember { mutableStateOf(false) }
 
     LaunchedEffect(obraId) {
-        val db = com.example.data.database.AppDatabase.getDatabase(context)
+        val db = br.com.yson.controle.de.obras.data.database.AppDatabase.getDatabase(context)
         currentObra = db.appDao().getObraById(obraId)
     }
 
