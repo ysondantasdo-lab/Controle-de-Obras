@@ -1999,6 +1999,8 @@ fun FornecedoresObraScreen(
                     val groupedFornecedores = launchedFornecedores
                         .groupBy { it.fornecedorNome }
                         .toSortedMap()
+                    val expandedStates = remember { mutableStateMapOf<String, Boolean>() }
+
 
                     LazyColumn(
                         modifier = Modifier.fillMaxSize(),
@@ -2007,45 +2009,50 @@ fun FornecedoresObraScreen(
                     ) {
                         groupedFornecedores.forEach { (nome, itemsForSupplier) ->
                             item(key = "header_$nome") {
-                                Surface(
-                                    color = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.5f),
-                                    shape = RoundedCornerShape(8.dp),
-                                    modifier = Modifier
-                                        .fillMaxWidth()
+                                Surface( 
+                                    color = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.5f), 
+                                    shape = RoundedCornerShape(8.dp), 
+                                    modifier = Modifier 
+                                        .fillMaxWidth() 
                                         .padding(vertical = 4.dp)
-                                ) {
-                                    Row(
+                                        // ADICIONADO: Torna o cabeçalho clicável
+                                        .clickable { expandedStates[nome] = !(expandedStates[nome] ?: false) }
+                                ) { 
+                                    Row( 
                                         modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
                                         verticalAlignment = Alignment.CenterVertically
-                                    ) {
-                                        Icon(
-                                            imageVector = Icons.Default.Person,
+                                    ) { 
+                                        Icon( 
+                                            imageVector = Icons.Default.Person, 
                                             contentDescription = null,
                                             tint = MaterialTheme.colorScheme.onSecondaryContainer,
-                                            modifier = Modifier.size(18.dp)
-                                        )
-                                        Spacer(modifier = Modifier.width(8.dp))
-                                        Text(
-                                            text = nome,
+                                            modifier = Modifier.size(18.dp) 
+                                        ) 
+                                        Spacer(modifier = Modifier.width(8.dp)) 
+                                        Text( 
+                                            text = nome, 
                                             style = MaterialTheme.typography.titleMedium,
-                                            fontWeight = FontWeight.Bold,
-                                            color = MaterialTheme.colorScheme.onSecondaryContainer
-                                        )
-                                    }
-                                }
-                            }
-                            items(itemsForSupplier, key = { it.id }) { item ->
-                                LaunchedFornecedorCard(
-                                    item = item,
-                                    onClick = { selectedItemForPaymentsDetails = item },
-                                    onDelete = { viewModel.deleteFornecedorObra(item) }
-                                )
+                                            fontWeight = FontWeight.Bold, 
+                                            color = MaterialTheme.colorScheme.onSecondaryContainer 
+                                        ) 
+                                    } 
+                                } 
+                            } 
+                            // ADICIONADO: Condição que só mostra os cartões se estiver expandido
+                            if (expandedStates[nome] == true) {
+                                items(itemsForSupplier, key = { it.id }) { item -> 
+                                    LaunchedFornecedorCard( 
+                                        item = item, 
+                                        onClick = { selectedItemForPaymentsDetails = item }, 
+                                        onDelete = { viewModel.deleteFornecedorObra(item) } 
+                                    ) 
+                                } 
                             }
                         }
                     }
                 }
             }
-
+                    
             if (showAddDialog) {
                 AddFornecedorObraDialog(
                     globalList = globalFornecedores,
