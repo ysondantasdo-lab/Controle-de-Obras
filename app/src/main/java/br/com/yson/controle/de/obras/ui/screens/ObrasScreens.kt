@@ -3411,7 +3411,7 @@ fun RelatorioObraScreen(
                 color = MaterialTheme.colorScheme.onBackground
             )
 
-            // Suppliers metric card
+            // Suppliers metric card - CORREÇÃO DO VALOR CONTRATADO PARA FORNECEDOR
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(12.dp),
@@ -3425,33 +3425,13 @@ fun RelatorioObraScreen(
                     }
                     Divider(color = ThemeColors.BorderMuted, thickness = 1.dp)
 
-                    Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
-                        Text("Total Contratado (Materiais)", fontSize = 15.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                        Text(formatCurrency(totalContractedSuppliers), fontSize = 16.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
-                    }
-
+                    
                     Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
                         Text("Valor Total Pago", fontSize = 15.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
                         Text(formatCurrency(totalPaidSuppliers), fontSize = 18.sp, fontWeight = FontWeight.ExtraBold, color = Color(0xFF00E5FF))
                     }
 
-                    val pct = if (totalContractedSuppliers > 0) (totalPaidSuppliers / totalContractedSuppliers) else 0.0
-                    LinearProgressIndicator(
-                        progress = pct.toFloat().coerceIn(0f, 1f),
-                        color = Color(0xFF00E5FF),
-                        trackColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.15f),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(6.dp)
-                            .clip(RoundedCornerShape(3.dp))
-                    )
-                    Text(
-                        text = "Progresso de Quitação: ${(pct * 100).toInt()}%",
-                        fontSize = 13.sp,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.End
-                    )
+                    
                 }
             }
 
