@@ -275,7 +275,7 @@ fun MainScreen(
                 }
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    text = "Controle global de fornecedores e prestadores",
+                    text = "Controle de gasto global por obra",
                     fontSize = 14.sp,
                     fontStyle = androidx.compose.ui.text.font.FontStyle.Italic,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -283,7 +283,7 @@ fun MainScreen(
             }
 
             Text(
-                text = "Cadastros Globais",
+                text = "Cadastros",
                 fontWeight = FontWeight.Bold,
                 fontSize = 16.sp,
                 color = MaterialTheme.colorScheme.onBackground,
@@ -1956,7 +1956,7 @@ fun FornecedoresObraScreen(
             FloatingActionButton(
                 onClick = {
                     if (globalFornecedores.isEmpty()) {
-                        Toast.makeText(context, "Cadastre fornecedores no cadastro global antes!", Toast.LENGTH_LONG).show()
+                        Toast.makeText(context, "Cadastre fornecedores no cadastro antes!", Toast.LENGTH_LONG).show()
                     } else {
                         showAddDialog = true
                     }
@@ -1984,7 +1984,7 @@ fun FornecedoresObraScreen(
                     ) {
                         Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)) {
                             Text(text = obra.nome, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface, fontSize = 15.sp)
-                            Text(text = "Lançamentos de materiais e serviços contratados", fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            Text(text = "Lançamentos de fornecedores de materiais para obra", fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
                     }
                 }
@@ -1993,7 +1993,7 @@ fun FornecedoresObraScreen(
                     EmptyStateView(
                         icon = Icons.Default.Person,
                         title = "Nenhum fornecedor lançado",
-                        description = "Aloque fornecedores globais a esta obra tocando no botão +."
+                        description = "Aloque fornecedores a esta obra tocando no botão +."
                     )
                 } else {
                     val groupedFornecedores = launchedFornecedores
@@ -2233,7 +2233,7 @@ fun AddFornecedorObraDialog(
 
                 // Beautiful Custom Selector (Droplist)
                 Text(
-                    text = "Selecione o Fornecedor (Cadastro Global)",
+                    text = "Selecione o Fornecedor (Cadastro)",
                     fontSize = 12.sp,
                     fontWeight = FontWeight.Medium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -2327,11 +2327,11 @@ fun AddFornecedorObraDialog(
                 OutlinedTextField(
                     value = valorServicoStr,
                     onValueChange = {},
-                    label = { Text("Valor Total (Histórico)") },
+                    label = { Text("Valor Desembolsado") },
                     readOnly = true,
                     enabled = false,
                     supportingText = {
-                        Text("Calculado automaticamente a partir do histórico de pagamentos")
+                        Text("Calculado automaticamente")
                     },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     singleLine = true,
@@ -2426,7 +2426,7 @@ fun PrestadoresObraScreen(
             FloatingActionButton(
                 onClick = {
                     if (globalPrestadores.isEmpty()) {
-                        Toast.makeText(context, "Cadastre prestadores no cadastro global antes!", Toast.LENGTH_LONG).show()
+                        Toast.makeText(context, "Cadastre prestadores no cadastro antes!", Toast.LENGTH_LONG).show()
                     } else {
                         showAddDialog = true
                     }
@@ -2435,7 +2435,7 @@ fun PrestadoresObraScreen(
                 contentColor = Color.Black,
                 modifier = Modifier.testTag("add_prestador_obra_fab")
             ) {
-                Icon(Icons.Default.Add, contentDescription = "Lançar Prestador/Serviço")
+                Icon(Icons.Default.Add, contentDescription = "Lançar Prestador de Serviços")
             }
         }
     ) { innerPadding ->
@@ -2453,7 +2453,7 @@ fun PrestadoresObraScreen(
                     ) {
                         Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)) {
                             Text(text = obra.nome, fontWeight = FontWeight.Bold, color = Color.White, fontSize = 15.sp)
-                            Text(text = "Relação de prestadores e consumo de materiais", fontSize = 12.sp, color = Color.LightGray)
+                            Text(text = "Relação de prestadores alocados para a obra", fontSize = 12.sp, color = Color.LightGray)
                         }
                     }
                 }
@@ -3354,7 +3354,7 @@ fun RelatorioObraScreen(
             }
 
             Text(
-                text = "Métricas de Serviços",
+                text = "Prestação de Serviços",
                 fontWeight = FontWeight.Bold,
                 fontSize = 18.sp,
                 color = MaterialTheme.colorScheme.onBackground
@@ -3375,7 +3375,7 @@ fun RelatorioObraScreen(
                     Divider(color = ThemeColors.BorderMuted, thickness = 1.dp)
 
                     Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
-                        Text("Total Contratado (Serviços)", fontSize = 15.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text("Total Contratado", fontSize = 15.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
                         Text(formatCurrency(totalContractedProviders), fontSize = 16.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
                     }
 
@@ -3405,7 +3405,7 @@ fun RelatorioObraScreen(
             }
 
             Text(
-                text = "Métricas de Materiais",
+                text = "Gastos com Materiais",
                 fontWeight = FontWeight.Bold,
                 fontSize = 18.sp,
                 color = MaterialTheme.colorScheme.onBackground
@@ -3457,7 +3457,7 @@ fun RelatorioObraScreen(
 
             // Lotes metric card
             Text(
-                text = "Métricas de Lotes",
+                text = "Gastos com Lotes",
                 fontWeight = FontWeight.Bold,
                 fontSize = 18.sp,
                 color = MaterialTheme.colorScheme.onBackground
@@ -3485,7 +3485,7 @@ fun RelatorioObraScreen(
 
             // Burocracia metric card
             Text(
-                text = "Métricas de Burocracia",
+                text = "Gastos com Burocracia",
                 fontWeight = FontWeight.Bold,
                 fontSize = 18.sp,
                 color = MaterialTheme.colorScheme.onBackground
