@@ -37,11 +37,13 @@ class ObrasViewModel(application: Application) : AndroidViewModel(application) {
     // --- FORNECEDORES ---
     fun insertFornecedor(nome: String, telefone: String, observacoes: String) {
         viewModelScope.launch(Dispatchers.IO) {
+            val telFmt = telefone.replace(Regex("\\D"), "").removePrefix("55").removePrefix("0").let { if(it.length == 10) "${it.substring(0,2)}9${it.substring(2)}" else it }
             repository.insertFornecedor(Fornecedor(nome = nome, telefone = telefone, observacoes = observacoes))
         }
     }
 
     fun updateFornecedor(fornecedor: Fornecedor) {
+        val telFmt = fornecedor.telefone.replace(Regex("\\D"), "").removePrefix("55").removePrefix("0").let { if(it.length == 10) "${it.substring(0,2)}9${it.substring(2)}" else it }
         viewModelScope.launch(Dispatchers.IO) {
             repository.updateFornecedor(fornecedor)
         }
@@ -56,11 +58,13 @@ class ObrasViewModel(application: Application) : AndroidViewModel(application) {
     // --- PRESTADORES ---
     fun insertPrestador(nome: String, telefone: String, observacoes: String) {
         viewModelScope.launch(Dispatchers.IO) {
+            val telFmt = telefone.replace(Regex("\\D"), "").removePrefix("55").removePrefix("0").let { if(it.length == 10) "${it.substring(0,2)}9${it.substring(2)}" else it }
             repository.insertPrestador(Prestador(nome = nome, telefone = telefone, observacoes = observacoes))
         }
     }
 
     fun updatePrestador(prestador: Prestador) {
+        val telFmt = prestador.telefone.replace(Regex("\\D"), "").removePrefix("55").removePrefix("0").let { if(it.length == 10) "${it.substring(0,2)}9${it.substring(2)}" else it }
         viewModelScope.launch(Dispatchers.IO) {
             repository.updatePrestador(prestador)
         }
