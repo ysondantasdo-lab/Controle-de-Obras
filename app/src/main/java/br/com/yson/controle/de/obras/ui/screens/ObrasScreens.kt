@@ -150,6 +150,49 @@ fun formatPhoneString(input: String): String {
     return sb.toString()
 }
 
+private val validDDDs = setOf(
+    11,12,13,14,15,16,17,18,19,
+    21,22,24,27,28,
+    31,32,33,34,35,37,38,
+    41,42,43,44,45,46,47,48,49,
+    51,53,54,55,
+    61,62,63,64,65,66,67,68,69,
+    71,73,74,75,77,79,
+    81,82,83,84,85,86,87,88,89,
+    91,92,93,94,95,96,97,98,99
+)
+
+fun sanitizePhoneNumber(input: String): String {
+    // 1. Limpeza inicial (parênteses, espaços, traços, "+")
+    var digits = input.filter { it.isDigit() }
+
+    // 2. Remoção de DDI (55) — só remove se sobrar dígitos suficientes pra DDD+telefone
+    if (digits.length >= 12 && digits.startsWith("55")) {
+        digits = digits.substring(2)
+    }
+
+    // 3. Remoção de código de operadora (ex: 021, 015 -> "0" + 2 dígitos)
+    if (digits.length > 11 && digits.startsWith("0")) {
+        digits = digits.substring(3)
+    }
+
+    // 4. Extração do DDD (só existe DDD se sobrarem 10 ou 11 dígitos)
+    val hasDDD = (digits.length == 10 || digits.length == 11) &&
+            digits.substring(0, 2).toIntOrNull()?.let { it in validDDDs } == true
+
+    val ddd = if (hasDDD) digits.substring(0, 2) else ""
+    var phoneOnly = if (hasDDD) digits.substring(2) else digits
+
+    // 5. Correção do 9º dígito para celular
+    if (phoneOnly.length == 8 && phoneOnly.first() in '6'..'9') {
+        phoneOnly = "9$phoneOnly"
+    }
+    // se já tiver 9 dígitos começando com 9 (celular) ou 8 dígitos começando com 2-5 (fixo), mantém como está
+
+    return ddd + phoneOnly
+}
+
+
 fun formatCurrencyString(digits: String): String {
     val clean = digits.filter { it.isDigit() }
     if (clean.isEmpty()) return "0,00"
@@ -671,7 +714,7 @@ fun AddSupplierDialog(
                         val contactName = cursor.getString(nameIndex) ?: ""
                         val contactNumber = cursor.getString(numberIndex) ?: ""
                         
-                        val cleanNumber = contactNumber.filter { it.isDigit() }
+                        val cleanNumber = sanitizePhoneNumber(contactNumber)
                         
                         name = contactName
                         phone = cleanNumber
@@ -1021,7 +1064,7 @@ fun AddProviderDialog(
                         val contactName = cursor.getString(nameIndex) ?: ""
                         val contactNumber = cursor.getString(numberIndex) ?: ""
                         
-                        val cleanNumber = contactNumber.filter { it.isDigit() }
+                        val cleanNumber = sanitizePhoneNumber(contactNumber)
                         
                         name = contactName
                         phone = cleanNumber
