@@ -1528,6 +1528,52 @@ fun LancamentoObrasScreen(
 
             Spacer(modifier = Modifier.height(4.dp))
 
+            // 1. Variável de estado para controlar a abertura da caixa de texto (coloque no topo do escopo da tela se preferir)
+            var showMemorialDialog by remember { mutableStateOf(false) }
+            var memorialText by remember { mutableStateOf("") } // Aqui vai o texto digitado
+
+            // 2. O novo botão do Memorial Descritivo colocado ANTES do LOTE
+            ElevatedDashboardButton(
+                text = "MEMORIAL DESCRITIVO",
+                icon = Icons.Default.Edit, // Você pode mudar o ícone se quiser
+                countText = "Escrever memorial",
+                colorAccent = Color(0xFF4CAF50), // Cor verde (exemplo)
+                testTag = "memorial_descritivo_nav_button",
+                onClick = { showMemorialDialog = true } // Abre a caixa de texto
+            )
+
+            // 3. A Caixa de Texto (Dialog) com o botão Salvar
+            if (showMemorialDialog) {
+                AlertDialog(
+                    onDismissRequest = { showMemorialDialog = false },
+                    title = { Text("Memorial Descritivo") },
+                    text = {
+                        OutlinedTextField(
+                            value = memorialText,
+                            onValueChange = { memorialText = it },
+                            label = { Text("Digite o memorial da obra...") },
+                            modifier = Modifier.fillMaxWidth().height(150.dp)
+                        )
+                    },
+                    confirmButton = {
+                        TextButton(
+                            onClick = {
+                                // TODO: Aqui vai a chamada para salvar o texto no banco de dados (ViewModel)
+                                showMemorialDialog = false 
+                            }
+                        ) {
+                            Text("SALVAR")
+                        }
+                    },
+                    dismissButton = {
+                        TextButton(onClick = { showMemorialDialog = false }) {
+                            Text("CANCELAR")
+                        }
+                    }
+                )
+            }
+
+
             // Action Selection: LOTE DA OBRA, BUROCRACIA DA OBRA, FORNECEDORES DA OBRA, PRESTADORES DA OBRA, RELATÓRIO
             ElevatedDashboardButton(
                 text = "LOTE",
