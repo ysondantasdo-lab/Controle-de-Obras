@@ -163,34 +163,52 @@ private val validDDDs = setOf(
 )
 
 fun sanitizePhoneNumber(input: String): String {
-    // 1. Limpeza inicial (parênteses, espaços, traços, "+")
+    // Limpeza inicial (apenas mantém os algarismos)
     var digits = input.filter { it.isDigit() }
+    
+    val operadoras = listOf("15", "21", "41", "31")
 
-    // 2. Remoção de DDI (55) — só remove se sobrar dígitos suficientes pra DDD+telefone
-    if (digits.length >= 12 && digits.startsWith("55")) {
-        digits = digits.substring(2)
+    // --- PASSO 1: Caso em que NÃO existe operadora nem DDD (8 ou 9 dígitos) ---
+    if (digits.length == 8 || digits.length == 9) {
+        if (digits.length == 8) {
+            digits = "9$digits" // Adiciona o 9 na frente se tiver 8 dígitos
+        }
+        return digits // Armazena e finaliza
     }
 
-    // 3. Remoção de código de operadora (ex: 021, 015 -> "0" + 2 dígitos)
-    if (digits.length > 11 && digits.startsWith("0")) {
-        digits = digits.substring(3)
+    // --- PASSO 2: Verificar se existe código de operadora ---
+    var encontrouOperadora = false
+
+    for (op in operadoras) {
+        val index = digits.indexOf(op)
+        // Se encontrar a operadora em qualquer lugar, apaga dela para trás
+        if (index != -1) {
+            encontrouOperadora = true
+            digits = digits.substring(index + op.length)
+            break 
+        }
     }
 
-    // 4. Extração do DDD (só existe DDD se sobrarem 10 ou 11 dígitos)
-    val hasDDD = (digits.length == 10 || digits.length == 11) &&
-            digits.substring(0, 2).toIntOrNull()?.let { it in validDDDs } == true
-
-    val ddd = if (hasDDD) digits.substring(0, 2) else ""
-    var phoneOnly = if (hasDDD) digits.substring(2) else digits
-
-    // 5. Correção do 9º dígito para celular
-    if (phoneOnly.length == 8 && phoneOnly.first() in '6'..'9') {
-        phoneOnly = "9$phoneOnly"
+    // --- PASSO 3: Se NÃO encontrou operadora E o número tem mais que 9 dígitos ---
+    if (!encontrouOperadora && digits.length > 9) {
+        // Define o limite: do início até antes dos últimos 8 dígitos
+        val limiteBusca = digits.length - 8
+        
+        if (limiteBusca > 0) {
+            // Recorta apenas o trecho permitido para buscar o 55
+            val trechoBusca = digits.substring(0, limiteBusca)
+            val index55 = trechoBusca.indexOf("55")
+            
+            if (index55 != -1) {
+                // Armazena tudo após o 55 (usando o índice real da string original)
+                digits = digits.substring(index55 + 2)
+            }
+        }
     }
-    // se já tiver 9 dígitos começando com 9 (celular) ou 8 dígitos começando com 2-5 (fixo), mantém como está
 
-    return ddd + phoneOnly
+    return digits // Número limpo e pronto para o usuário salvar
 }
+
 
 
 fun formatCurrencyString(digits: String): String {
